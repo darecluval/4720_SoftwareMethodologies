@@ -15,9 +15,9 @@ time_str=StringVar()
 words_str=StringVar()
 
 #Timers in min
-work_timer = 25
-break1_timer = 5
-break2_timer = 15
+work_timer = 25 
+break1_timer = 5 
+break2_timer = 15 
 s_num = 0
 key_num = 0
 tot_sec = 0
@@ -38,7 +38,7 @@ words_str.set("{0:2d} min".format(work_timer)+" "+"{0:2d} sec".format(0))
 
 # Run a given timer 
 def run_timer(mins, alarm, label):
-    seconds = mins# * 60
+    seconds = mins * 60
     global on
     time_str.set(label)
     while seconds >= 0 and on:
@@ -92,21 +92,20 @@ def exit():
     global s_num
     mins,secs = divmod(tot_sec,60) 
     hours, mins = divmod(mins,60) 
-    time_str.set("Time elapsed: "
-          + str(hours) + " hours, "
-          + str(mins) + " minutes, "
-          + str(secs) + " seconds")
-    words_str.set("Words typed: " + str(s_num+1))
+    a = "Time elapsed: " + str(hours) + " hours, " + str(mins) + " minutes, " + str(secs) + " seconds"
+    b = " \nWords typed: " + str(s_num+1)
     
-    global btn
-    btn.destroy()
+    os.system("""
+              osascript -e 'display notification "{}" with title "{}"'
+              """.format(a + b, "Pomodoro"))
+    os.system('afplay /System/Library/Sounds/Sosumi.aiff')
     
-    root.update()
+    #global btn
+    #btn.destroy()
+    
     
     time.sleep(10000)
     
-    global on 
-    on = False
     
     
     return False
